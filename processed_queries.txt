@@ -1,0 +1,9 @@
+SELECT DISTINCT  ?v0 WHERE   { <http://dbpedia.org/resource/Barack_Obama>               a  ?v0   } 
+SELECT DISTINCT  ?v0 WHERE   { <http://dbpedia.org/resource/Interstellar_(film)>               a  ?v0   } 
+SELECT DISTINCT  ?v0 WHERE   { ?v0  a  <http://xmlns.com/foaf/0.1/Person> } 
+SELECT DISTINCT  ?v1 ?v0 WHERE   { <http://dbpedia.org/resource/Pulp_Fiction>               <http://dbpedia.org/ontology/director>  ?v1 ;               <http://dbpedia.org/ontology/starring>  ?v0   } 
+SELECT DISTINCT  ?v0 ?v1 WHERE   { <http://dbpedia.org/resource/Django_Unchained>               <http://dbpedia.org/ontology/director>  ?v0 ;               <http://dbpedia.org/ontology/starring>  ?v1   } 
+SELECT DISTINCT  ?v2 ?v0 ?v1 WHERE   { ?v2  a                     <http://dbpedia.org/ontology/Place> ;          <http://www.w3.org/2003/01/geo/wgs84_pos#lat>  ?v1 ;          <http://www.w3.org/2003/01/geo/wgs84_pos#long>  ?v0     FILTER ( ( ( ( ?v1 - <http://www.w3.org/2001/XMLSchema#float>(44.849998) ) * ( ?v1 - <http://www.w3.org/2001/XMLSchema#float>(44.849998) ) ) + ( ( ?v0 - <http://www.w3.org/2001/XMLSchema#float>(7.716667) ) * ( ?v0 - <http://www.w3.org/2001/XMLSchema#float>(7.716667) ) ) ) < <http://www.w3.org/2001/XMLSchema#float>(1.0) )   } 
+SELECT  ?v2 ?v0 ?v1 WHERE   { VALUES ?v0 { <http://example.org/book/book3> <http://example.org/book/book1> }     ?v0  <http://example.org/ns#price>  ?v1 ;          <http://purl.org/dc/elements/1.1/title>  ?v2   } 
+SELECT  ?v1 ?v0 ?v2 WHERE   { VALUES ?v1 { <http://example.org/book/book2> <http://example.org/book/book3> }     ?v1  <http://example.org/ns#price>  ?v2 ;          <http://purl.org/dc/elements/1.1/title>  ?v0   } 
+

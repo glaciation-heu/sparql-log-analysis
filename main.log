@@ -1,0 +1,17 @@
+INFO:__main__:SELECT ?type WHERE {
+        dbr:Barack_Obama rdf:type ?type     
+    }
+INFO:__main__:SELECT ?type WHERE {
+        dbr:Interstellar_(film) rdf:type ?type
+    }
+INFO:__main__:SELECT ?type WHERE {
+        ?p rdf:type foaf:Person
+    }
+INFO:__main__:SELECT ?director ?starring WHERE {
+        dbr:Pulp_Fiction dbo:director ?director .
+        dbr:Pulp_Fiction dbo:starring ?starring .
+    }
+INFO:__main__:SELECT ?director ?starrin WHERE {
+        dbr:Django_Unchained dbo:director ?director .
+        dbr:Django_Unchained dbo:starring ?starring .
+    }

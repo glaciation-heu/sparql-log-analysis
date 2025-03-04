@@ -1,0 +1,8 @@
+PREFIX dbr: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>   SELECT ?type WHERE { dbr:Barack_Obama rdf:type ?type }
+PREFIX dbr: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>   SELECT ?type WHERE { dbr:Interstellar_\(film\) rdf:type ?type }
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX foaf: <http://xmlns.com/foaf/0.1/>  SELECT ?p WHERE { ?p rdf:type foaf:Person }
+PREFIX dbr: <http://dbpedia.org/resource/> PREFIX dbo: <http://dbpedia.org/ontology/>   SELECT ?director ?starring WHERE { dbr:Pulp_Fiction dbo:director ?director . dbr:Pulp_Fiction dbo:starring ?starring . }
+PREFIX dbr: <http://dbpedia.org/resource/> PREFIX dbo: <http://dbpedia.org/ontology/>   SELECT ?director ?starring WHERE { dbr:Django_Unchained dbo:director ?director . dbr:Django_Unchained dbo:starring ?starring . }
+PREFIX geo:<http://www.w3.org/2003/01/geo/wgs84_pos#>  PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>  SELECT DISTINCT ?l ?lat ?lng  WHERE {   ?l geo:lat ?lat; geo:long ?lng; a <http://dbpedia.org/ontology/Place>.   FILTER(((?lat - xsd:float(44.849998))*(?lat - xsd:float(44.849998))+(?lng - xsd:float(7.716667))*(?lng - xsd:float(7.716667)))<xsd:float(1.0)) }
+PREFIX dc:   <http://purl.org/dc/elements/1.1/> PREFIX :     <http://example.org/book/> PREFIX ns:   <http://example.org/ns#> SELECT ?book ?title ?price { VALUES ?book { :book1 :book3 } ?book dc:title ?title ; ns:price ?price . }
+PREFIX dc:   <http://purl.org/dc/elements/1.1/> PREFIX :     <http://example.org/book/> PREFIX ns:   <http://example.org/ns#> SELECT ?book ?title ?price { VALUES ?book { :book2 :book3 } ?book dc:title ?title ; ns:price ?price . }
