@@ -251,6 +251,7 @@ def main():
     queries = load_queries(f'{LOG_FOLDER}distinct_sorted_queries.txt')
     logger.info(f'{len(queries)} are loaded')
 
+    # QCan step
     if os.path.exists(f'{LOG_FOLDER}distinct_sorted_queries_canonicalised.txt'):
         queries_normalized = load_queries(f'{LOG_FOLDER}distinct_sorted_queries_canonicalised.txt')
     else:
@@ -259,6 +260,7 @@ def main():
             len(queries)
         )
 
+    # discovering tempaltes
     discover_templates(queries_normalized)
 
 
