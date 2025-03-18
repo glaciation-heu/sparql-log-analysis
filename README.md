@@ -1,5 +1,5 @@
 # Description
-SPARQL query log collection and analysis
+SPARQL query log collection and analysis:
 * SPARQL canonicalisation/normalization is done using [QCan library](https://github.com/RittoShadow/QCan)
 * Template discovery is done with the ISWC paper: [How is your Knowledge Graph Used:
 Content-Centric Analysis of SPARQL Query
