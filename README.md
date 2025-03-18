@@ -15,4 +15,5 @@ requirements.txt # required libraries dumped by ```pip freeze > requirements.txt
 ```
 
 # Example
-Execute the QCan and template discovery: ```python -m main```
+Execute the QCan and template discovery: 
+```$ python -m main```
