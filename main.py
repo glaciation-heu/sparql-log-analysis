@@ -27,12 +27,16 @@ def load_queries(filename: str) -> list:
 
 def normalize(query_file: str, num: int) -> list:
     """ Return normalized queries using Qcan libray """
-    # clean up the folder
-    subprocess.run('rm resultFiles/*', shell=True, check=True)
+    subprocess.run(f'rm {LOG_FOLDER}distinct_sorted_queries_canonicalised.txt', shell=True, )
 
+    res = list()
     # execute Qcan
     for i in range(num):
-        subprocess.run(['java', 
+        # clean up the folder
+        process = subprocess.run('rm resultFiles/*.*', shell=True,)
+        process = subprocess.run('rm resultFiles/jena/*.*', shell=True,)
+        # create new one
+        process = subprocess.run(['java', 
             '-jar', 
             'QCan/target/qcan-1.1-jar-with-dependencies.jar',
             'benchmark',
@@ -42,21 +46,41 @@ def normalize(query_file: str, num: int) -> list:
             str(i+1),
             '-o',
             str(i),
-            '-d'
+            '-d', '-j'
         ])
-        break
+
     
-    # process the output file
-    pattern = 'resultFiles/*_dist*.log'
-    log_file = glob.glob(pattern)[0]
-    logger.debug(f'log file: {log_file}')
+        # process the output file
+        pattern = 'resultFiles/jena/*_dist*.log'
+        log_file = glob.glob(pattern)[0]
+        logger.debug(f'log file: {log_file}')
 
-    with open(log_file, 'r') as f:
-        lines = f.readlines()
-        print(lines)
+        with open(log_file, 'r') as f:
+            lines = f.readlines()
+            lines_ignore = [
+                '\n', 
+                'Distribution of canonicalised queries: \n', 
+                'Total number of duplicates detected: 0\n', 
+                'Most duplicates found: 1',
+                ' : 1\n'
+            ]
+            lines = [x for x in lines if x not in lines_ignore]
+            query = ' '.join(lines)
+            query = query.replace('\n',' ')
+            logger.debug(f'Query: {query}')
 
+        with open(f'{LOG_FOLDER}distinct_sorted_queries_canonicalised.txt', 'a') as f:
+            f.write(query+'\n')
+            res.append(query)
 
+        #if i>8:
+        #    break
 
+    # Finally clean up the folder for github 
+    subprocess.run('rm resultFiles/*.*', shell=True,)
+    subprocess.run('rm resultFiles/jena/*.*', shell=True,)
+
+    return res
 
 
 def is_keyword(term: str) -> bool:
@@ -101,7 +125,7 @@ def generalize(query: str) -> tuple:
     query = query.strip()
 
     # Expand () with front and rear spaces
-    for i in ['(', ')']:
+    for i in ['(', ')', ',']:
         query = query.replace(i, ' '+i+' ')
 
     # Special care of VALUES
@@ -128,6 +152,7 @@ def generalize(query: str) -> tuple:
     template = ' '.join(terms)
 
     # Update var names to be in order
+    var_dict = dict(sorted(var_dict.items(), key=lambda x: len(x[0]), reverse=True))
     for var in var_dict:
         template = template.replace(var, var_dict[var])
 
@@ -139,10 +164,13 @@ def generalize(query: str) -> tuple:
 
 
 def specialize(template: str, mapping: list) -> dict:
-    """ Update the template 
-    """
+    """ Update the template with values if all the same """
     # If mappings of a parameter are all the same
     # specify that instead of parameter
+    logger.info(f'{"#"*50}\nSpecializing template')
+    logger.debug(f'Template before specialization: {template}')
+    logger.debug(f'Mapping: {mapping}')
+
     params = list()
     for param in mapping[0]:
         param_val = mapping[0][param]
@@ -150,16 +178,25 @@ def specialize(template: str, mapping: list) -> dict:
         if len(mapping) == 1:
             all_mapping_the_same = False
         else:
+            # Check other mapping values for the param
             for m in mapping:
                 if m[param] != param_val:
                     all_mapping_the_same = False
         if all_mapping_the_same:
             params.append(param)
             
-    for param in params:
-        template = template.replace(param, param_val)
+    # Update the param values if all mappings are the same
+    # But need to update with longer ones first 
+    # E.g., in case $_1 replacement cause problem for $_13
+    for param in sorted(params, reverse=True):
+        template = template.replace(param, mapping[0][param])
         for m in mapping:
             m.pop(param)
+
+    
+    logger.debug(f'Template after specialization: {template}')
+    logger.debug(f'Mapping: {mapping}')
+    logger.info("#"*50)
 
     return template, mapping
 
@@ -188,21 +225,24 @@ def discover_templates(queries: list):
     for t in template_mappings:
         template_specialized, mapping_specialized = specialize(t, template_mappings[t])
         template_mappings_specialized[template_specialized].append(mapping_specialized)
-        df[df['T_generalized'] == t] = template_specialized
+        logger.debug(f'template: {t} -> specialized: {template_specialized}')
+        df.loc[df['T_generalized'] == t, 'T_specialized'] = template_specialized
+
+
+    print(df)
 
     logger.debug(f'Mappings specialized: {template_mappings_specialized}')
 
     # Store to disk
     for col in ['T_generalized', 'T_specialized']:
         with open(f'{LOG_FOLDER}{col}','w') as f:
-            for val in df[col]:
+            for val in df[col].tolist():
                 f.write(val+'\n')
 
     return template_queries, template_mappings_specialized
 
 
 def main():
-    """ """
     logging.basicConfig(
         #filename='main.log', 
         level=logging.DEBUG
@@ -211,12 +251,15 @@ def main():
     queries = load_queries(f'{LOG_FOLDER}distinct_sorted_queries.txt')
     logger.info(f'{len(queries)} are loaded')
 
-    queries_normalized = normalize(
-        f'{LOG_FOLDER}distinct_sorted_queries.txt',
-        len(queries)
-    )
+    if os.path.exists(f'{LOG_FOLDER}distinct_sorted_queries_canonicalised.txt'):
+        queries_normalized = load_queries(f'{LOG_FOLDER}distinct_sorted_queries_canonicalised.txt')
+    else:
+        queries_normalized = normalize(
+            f'{LOG_FOLDER}distinct_sorted_queries.txt',
+            len(queries)
+        )
 
-    #discover_templates(queries)
+    discover_templates(queries_normalized)
 
 
 if __name__ == '__main__':

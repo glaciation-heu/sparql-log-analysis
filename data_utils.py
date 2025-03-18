@@ -1,5 +1,6 @@
 KEYWORDS = [
     'a',
+    'AS',
     'abs',
     'ASK',
     'ASC',
@@ -74,4 +75,4 @@ KEYWORDS = [
     'YEAR',
 ]
 
-SYMBOLS = list('{}()+-*/;<>=.,') + ['&&', '||']
+SYMBOLS = list('{}()+-*/;<>=.,') + ['&&', '||', '>=', '<=']
