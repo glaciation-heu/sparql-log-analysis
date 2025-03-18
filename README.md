@@ -18,3 +18,5 @@ requirements.txt # required libraries dumped by ```pip freeze > requirements.txt
 Execute the QCan and template discovery: 
 
 ```$ python -m main```
+
+This step will generate two files: ```T_generalized``` and ```T_specialized``` under ```/log_analysis/logs```
