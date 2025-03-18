@@ -21,6 +21,8 @@ Step 1: Execute the QCan and template discovery:
 
 This step will generate two files: ```T_generalized``` and ```T_specialized``` under ```/log_analysis/logs```
 
-Step 2: Analyze the generated templates
+Step 2: Analyze the generated templates 
+
+```$ jupyter notebook ```
 
 Now we can open ```/log_analysis/logs/eda.ipynb``` Jupyter notebook for analyzing the results (see the notebook for details)
