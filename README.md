@@ -23,4 +23,4 @@ This step will generate two files: ```T_generalized``` and ```T_specialized``` u
 
 Step 2: Analyze the generated templates
 
-Now we can open /log_analysis/logs/eda.ipynb Jupyter notebook for analyzing the results (see the notebook for details)
+Now we can open ```/log_analysis/logs/eda.ipynb``` Jupyter notebook for analyzing the results (see the notebook for details)
