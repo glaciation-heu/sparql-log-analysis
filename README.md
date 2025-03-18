@@ -13,3 +13,6 @@ Logs](https://iswc2023.semanticweb.org/wp-content/uploads/2023/11/142650191.pdf%
 main.py          # entry point for running canonicalisation -> discovering templates for each sparql queries
 requirements.txt # required libraries dumped by ```pip freeze > requirements.txt```
 ```
+
+# Example
+Execute the QCan and template discovery: ```python -m main```
