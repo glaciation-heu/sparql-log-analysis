@@ -5,6 +5,7 @@ from collections import defaultdict
 import re
 import os
 import glob
+import pickle
 import data_utils
 import logging
 import pandas as pd
@@ -201,7 +202,7 @@ def specialize(template: str, mapping: list) -> dict:
     return template, mapping
 
 
-def discover_templates(queries: list):
+def discover_templates(queries: list, store_file: str = 'db/templates.pkl'):
     """ Discover all templates regarding input queries """
 
     df = pd.DataFrame({'Q': queries, 'T_specialized': None, 'T_generalized': None})
@@ -222,14 +223,19 @@ def discover_templates(queries: list):
     logger.debug(f'Mappings: {dict(zip(template_mappings.keys(), [len(x) for x in template_mappings.values()]))}')
 
     template_mappings_specialized = defaultdict(list)
+
+    # Construct DataFrame
     for t in template_mappings:
         template_specialized, mapping_specialized = specialize(t, template_mappings[t])
         template_mappings_specialized[template_specialized].append(mapping_specialized)
         logger.debug(f'template: {t} -> specialized: {template_specialized}')
         df.loc[df['T_generalized'] == t, 'T_specialized'] = template_specialized
 
+    # Store as pickle file for DB of CLI
+    with open(store_file, 'wb') as f:
+        pickle.dump(template_mappings_specialized, f)
 
-    print(df)
+    #print(df)
 
     logger.debug(f'Mappings specialized: {template_mappings_specialized}')
 
