@@ -28,3 +28,21 @@ This step will generate two files: ```T_generalized``` and ```T_specialized``` u
 ```$ jupyter notebook ```
 
 Now we can open ```/log_analysis/logs/eda.ipynb``` Jupyter notebook for analyzing the results (see the notebook for details)
+
+# Command line interface
+```python -m cli``` provides 2 commands for exploring SPARQL query templates discovered and associated queries of each template
+* ```show-templates``` List templates sorted by number of queries associated
+* ```show-queries``` Show queries belong to the given template id
+
+For example, the following command shows the templates discovered with their template ID
+
+```$ python -m cli show-templates```
+
+And if we would like to see actual queries associated with template ID 1, we can use the following command with template ID = 1 provided at the end
+
+```$ python -m cli show-queries 1```
+
+For more details, use the ```--help``` option:
+
+```$ python -m cli show-queries --help```
+```$ python -m cli show-templates --help```
