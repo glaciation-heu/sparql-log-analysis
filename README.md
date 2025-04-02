@@ -38,11 +38,12 @@ For example, the following command shows the templates discovered with their tem
 
 ```$ python -m cli show-templates```
 
-And if we would like to see actual queries associated with template ID 1, we can use the following command with template ID = 1 provided at the end
+To see actual queries associated with template ID 1, we can use the following command with template ID=1 provided at the end
 
 ```$ python -m cli show-queries 1```
 
 For more details, use the ```--help``` option:
 
 ```$ python -m cli show-queries --help```
+
 ```$ python -m cli show-templates --help```
