@@ -33,8 +33,8 @@ $ jupyter notebook
 
 Now we can open ```/log_analysis/logs/eda.ipynb``` Jupyter notebook for analyzing the results (see the notebook for details)
 
-# Command line interface
-```python -m cli``` provides 2 commands for exploring SPARQL query templates discovered and associated queries of each template
+# Command line interface (with [Typer](https://typer.tiangolo.com/))
+```python -m cli``` provides 2 commands for exploring SPARQL query templates discovered and associated queries of each template:
 * ```show-templates``` List templates sorted by number of queries associated
 * ```show-queries``` Show queries belong to the given template id
 
