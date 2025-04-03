@@ -19,13 +19,17 @@ Logs](https://iswc2023.semanticweb.org/wp-content/uploads/2023/11/142650191.pdf%
 # Example
 **Step 1**: Execute the QCan and template discovery: 
 
-```$ python -m main```
+```bash
+$ python -m main
+```
 
 This step will generate two files: ```T_generalized``` and ```T_specialized``` under ```/log_analysis/logs```
 
 **Step 2**: Analyze the generated templates 
 
-```$ jupyter notebook ```
+```bash
+$ jupyter notebook
+```
 
 Now we can open ```/log_analysis/logs/eda.ipynb``` Jupyter notebook for analyzing the results (see the notebook for details)
 
@@ -36,14 +40,22 @@ Now we can open ```/log_analysis/logs/eda.ipynb``` Jupyter notebook for analyzin
 
 For example, the following command shows the templates discovered with their template ID
 
-```$ python -m cli show-templates```
+```bash
+$ python -m cli show-templates
+```
 
 To see actual queries associated with template ID 1, we can use the following command with template ID=1 provided at the end
 
-```$ python -m cli show-queries 1```
+```bash
+$ python -m cli show-queries 1
+```
 
 For more details, use the ```--help``` option:
 
-```$ python -m cli show-queries --help```
+```bash
+$ python -m cli show-queries --help
+```
 
-```$ python -m cli show-templates --help```
+```bash
+$ python -m cli show-templates --help
+```
